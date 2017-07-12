@@ -6,18 +6,34 @@ import (
 )
 
 func TrTv(ref string, alt string) rune {
-  if len(alt) > 1 {
-    return '0'
-  }
-
   // Transition
-  if (ref == "A" && alt == "G") || (ref == "G" && alt == "A") || (ref == "C" && alt =="T") ||
-  (ref == "T" && alt == "C") {
-    return '1'
+  if ref == "A" {
+    if alt == "G" {
+      return '1'
+    } else if alt == "T" || alt == "C" {
+      return '2'
+    }
+  } else if ref == "G" {
+    if alt == "A" {
+      return '1'
+    } else if alt == "T" || alt == "C" {
+      return '2'
+    }
+  } else if ref == "C" {
+    if alt == "T" {
+      return '1'
+    } else if alt == "A" || alt == "G" {
+      return '2'
+    }
+  } else if ref == "T" {
+    if alt == "C" {
+      return '1'
+    } else if alt == "A" || alt == "G" {
+      return '2'
+    }
   }
 
-  // Transversion
-  return '2'
+  return '0'
 }
 
 func NormalizeHeader(header []string) {
