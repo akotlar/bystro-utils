@@ -11,11 +11,9 @@ const (
   Tv rune = '2'
 )
 
-func GetTrTv(ref string, alt string, multiallelic bool) rune {
-  if multiallelic {
-    return NotTrTv
-  }
-
+// Note: If passed decomposed multiallelics, will happily consider them tr or tv
+// I believe it should be up to the consumer what to do with this indeterminate case
+func GetTrTv(ref string, alt string) rune {
   if ref == "A" {
     if alt == "G" {
       return Tr
