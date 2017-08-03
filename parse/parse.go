@@ -6,14 +6,14 @@ import (
 )
 
 const (
-  NotTrTv rune = '0'
-  Tr rune = '1'
-  Tv rune = '2'
+  NotTrTv string = "0"
+  Tr string = "1"
+  Tv string = "2"
 )
 
 // Note: If passed decomposed multiallelics, will happily consider them tr or tv
 // I believe it should be up to the consumer what to do with this indeterminate case
-func GetTrTv(ref string, alt string) rune {
+func GetTrTv(ref string, alt string) string {
   if ref == "A" {
     if alt == "G" {
       return Tr
