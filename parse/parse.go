@@ -5,19 +5,66 @@ import (
   "regexp"
 )
 
-func TrTv(ref string, alt string) rune {
-  if len(alt) > 1 {
-    return '0'
+const (
+  NotTrTv rune = '0'
+  Tr rune = '1'
+  Tv rune = '2'
+)
+
+func GetTrTv(ref string, alt string, multiallelic bool) rune {
+  if multiallelic {
+    return NotTrTv
   }
 
-  // Transition
-  if (ref == "A" && alt == "G") || (ref == "G" && alt == "A") || (ref == "C" && alt =="T") ||
-  (ref == "T" && alt == "C") {
-    return '1'
+  if ref == "A" {
+    if alt == "G" {
+      return Tr
+    }
+
+    if alt == "C" || alt == "T" {
+      return Tv
+    }
+
+    return NotTrTv
   }
 
-  // Transversion
-  return '2'
+  if ref == "G" {
+    if alt == "A" {
+      return Tr
+    }
+
+    if alt == "C" || alt == "T" {
+      return Tv
+    }
+
+    return NotTrTv
+  }
+
+  if ref == "C" {
+    if alt == "T" {
+      return Tr
+    }
+
+    if alt == "A" || alt == "G" {
+      return Tv
+    }
+
+    return NotTrTv
+  }
+
+  if ref == "T" {
+    if alt == "C" {
+      return Tr
+    }
+
+    if alt == "A" || alt == "G" {
+      return Tv
+    }
+
+    return NotTrTv
+  }
+
+  return NotTrTv
 }
 
 func NormalizeHeader(header []string) {

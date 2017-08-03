@@ -6,20 +6,28 @@ import (
 )
 
 func TestTrTv(t *testing.T) {
-  if TrTv("A", "T") != '2' || TrTv("T", "A") != '2' ||
-  TrTv("A", "C") != '2' || TrTv("C", "A") != '2' ||
-  TrTv("G", "C") != '2' || TrTv("C", "G") != '2' ||
-  TrTv("G", "T") != '2' || TrTv("T", "G") != '2' {
+  if GetTrTv("A", "T", false) != '2' || GetTrTv("T", "A", false) != '2' ||
+  GetTrTv("A", "C", false) != '2' || GetTrTv("C", "A", false) != '2' ||
+  GetTrTv("G", "C", false) != '2' || GetTrTv("C", "G", false) != '2' ||
+  GetTrTv("G", "T", false) != '2' || GetTrTv("T", "G", false) != '2' {
     t.Error("Couldn't parse transversions")
   }
 
-  if TrTv("A", "G") != '1' || TrTv("G", "A") != '1' ||
-  TrTv("C", "T") != '1' || TrTv("T", "C") != '1' {
+  if GetTrTv("A", "G", false) != '1' || GetTrTv("G", "A", false) != '1' ||
+  GetTrTv("C", "T", false) != '1' || GetTrTv("T", "C", false) != '1' {
     t.Error("Couldn't parse transversions")
   }
 
-  if TrTv("A", "-1") != '0' || TrTv("A", "+A") != '0' {
+  if GetTrTv("A", "-1", false) != '0' || GetTrTv("A", "+A", false) != '0' {
     t.Error("Couldn't parse non-TrTv sites")
+  }
+
+  if GetTrTv("A", "T,C", false) != '0' || GetTrTv("A", "T", true) != '0' {
+    t.Error("Couldn't parse non-TrTv sites due to multiallelic")
+  }
+
+  if GetTrTv("A", "A", false) != '0' {
+    t.Error("Couldn't parse non-TrTv sites that are mistakenly homozygous reference")
   }
 }
 
