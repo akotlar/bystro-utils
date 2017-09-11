@@ -31,6 +31,17 @@ func TestTrTv(t *testing.T) {
   }
 }
 
+func TestHeader(t *testing.T) {
+  expected := strings.Join([]string{"chrom", "pos", "type", "ref", "alt", "trTv", "heterozygotes",
+    "heterozygosity", "homozygotes", "homozygosity", "missingGenos", "missingness", "sampleMaf"}, "\t")
+
+  if strings.Join(Header, "\t") == expected {
+    t.Log("OK: header defined properly")
+  } else {
+    t.Error("NOT OK: header defined properly")
+  }
+}
+
 func TestNormalizationOfSamples(t *testing.T) {
   header := []string{"#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO", "FORMAT", "S1.HAHAHAH", "S2.TRYINGTO.MESSYOUUP", "S3", "S-4"}
 

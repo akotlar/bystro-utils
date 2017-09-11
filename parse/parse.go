@@ -11,6 +11,9 @@ const (
   Tv string = "2"
 )
 
+var Header = []string{"chrom", "pos", "type", "ref", "alt", "trTv", "heterozygotes",
+    "heterozygosity", "homozygotes", "homozygosity", "missingGenos", "missingness", "sampleMaf"}
+
 // Note: If passed decomposed multiallelics, will happily consider them tr or tv
 // I believe it should be up to the consumer what to do with this indeterminate case
 func GetTrTv(ref string, alt string) string {
