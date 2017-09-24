@@ -42,6 +42,52 @@ func TestHeader(t *testing.T) {
   }
 }
 
+func TestConst(t *testing.T) {
+  if Tr != "1" {
+    t.Error("Tr != 1", Tr)
+  }
+
+  if Tv != "2" {
+    t.Error("Tv != 2", Tv)
+  }
+
+  if NotTrTv != "0" {
+    t.Error("NotTrTv != 0", NotTrTv)
+  }
+
+  if Snp != "SNP" {
+    t.Error("Snp != SNP", Snp)
+  }
+
+  if Del != "DEL" {
+    t.Error("Del != DEL", Del)
+  }
+
+  if Ins != "INS" {
+    t.Error("Snp != INS", Ins)
+  }
+
+  if Multi != "MULTIALLELIC" {
+    t.Error("Multi != MULTIALLELIC", Multi)
+  }
+
+  if Dsnp != "DENOVO_SNP" {
+    t.Error("Dsnp != DENOVO_SNP", Dsnp)
+  }
+
+  if Dins != "DENOVO_INS" {
+    t.Error("Dins != DENOVO_INS", Dins)
+  }
+
+  if Ddel != "DENOVO_DEL" {
+    t.Error("Ddel != DENOVO_DEL", Ddel)
+  }
+
+  if Dmulti != "DENOVO_MULTIALLELIC" {
+    t.Error("Dmulti != DENOVO_MULTIALLELIC", Dmulti)
+  }
+}
+
 func TestNormalizationOfSamples(t *testing.T) {
   header := []string{"#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO", "FORMAT", "S1.HAHAHAH", "S2.TRYINGTO.MESSYOUUP", "S3", "S-4"}
 

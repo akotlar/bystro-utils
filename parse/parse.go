@@ -11,6 +11,17 @@ const (
   Tv string = "2"
 )
 
+const (
+  Snp string = "SNP"
+  Ins string = "INS"
+  Del string = "DEL"
+  Multi string = "MULTIALLELIC"
+  Dsnp string = "DENOVO_SNP"
+  Dins string = "DENOVO_INS"
+  Ddel string = "DENOVO_DEL"
+  Dmulti string = "DENOVO_MULTIALLELIC"
+)
+
 var Header = []string{"chrom", "pos", "type", "ref", "alt", "trTv", "heterozygotes",
     "heterozygosity", "homozygotes", "homozygosity", "missingGenos", "missingness", "sampleMaf"}
 
