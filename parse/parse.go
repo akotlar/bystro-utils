@@ -15,6 +15,7 @@ const (
   Snp string = "SNP"
   Ins string = "INS"
   Del string = "DEL"
+  Mnp string = "MNP"
   Multi string = "MULTIALLELIC"
   Dsnp string = "DENOVO_SNP"
   Dins string = "DENOVO_INS"

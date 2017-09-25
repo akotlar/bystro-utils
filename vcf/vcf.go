@@ -16,6 +16,12 @@ const FilterIdx int = 6
 const InfoIdx int = 7
 const FormatIdx int = 8
 
+const SNP string = "SNP"
+const INS string = "INS"
+const DEL string = "DEL"
+const MULTI string = "MULTIALLELIC"
+
+
 func UpdateFieldsWithAlt(ref string, alt string, pos string, multiallelic bool) (string, string, string, string, error) {
   /*********************** SNPs *********************/
   if len(alt) == len(ref) {
@@ -51,16 +57,12 @@ func UpdateFieldsWithAlt(ref string, alt string, pos string, multiallelic bool) 
 
       // Most cases are diffIdx == 0, allow us to skip 1 strconv.Atoi, 1 assignment, 1 strconv.Itoa, and 1 addition
       if diffIdx == 0 {
-        return "SNP", pos, string(ref[diffIdx]), string(alt[diffIdx]), nil
+        return SNP, pos, string(ref[diffIdx]), string(alt[diffIdx]), nil
       }
 
       intPos, _ := strconv.Atoi(pos)
-      return "SNP", strconv.Itoa(intPos + diffIdx), string(ref[diffIdx]), string(alt[diffIdx]), nil
+      return SNP, strconv.Itoa(intPos + diffIdx), string(ref[diffIdx]), string(alt[diffIdx]), nil
     }
-
-    return "SNP", pos, ref, alt, nil
-  }
-
   /*********************** INSERTIONS AND DELETIONS *********************/
   // TODO: Handle case where first base of contig is deleted, and padded as the first unmodified base downstream
   //First base is always padding
@@ -78,7 +80,7 @@ func UpdateFieldsWithAlt(ref string, alt string, pos string, multiallelic bool) 
     // Simple insertions delete the entire reference, sans the padding base to the left
     // TODO: handle 1st base deleted in contig, padded to right
     if len(alt) == 1 {
-      return "DEL", strconv.Itoa(intPos + 1), string(ref[1]), strconv.Itoa(1 - len(ref)), nil
+      return DEL, strconv.Itoa(intPos + 1), string(ref[1]), strconv.Itoa(1 - len(ref)), nil
     }
 
     // log.Println("Complex del", pos, ref, alt, multiallelic)
@@ -97,7 +99,7 @@ func UpdateFieldsWithAlt(ref string, alt string, pos string, multiallelic bool) 
       return "", "", "", "", nil
     }
     // TODO: More precise checking; for instance we can check if the alt is contained within the end of the ref (sans the 1 base deletion)
-    return "DEL", strconv.Itoa(intPos + 1), string(ref[1]), strconv.Itoa(len(alt) - len(ref)), nil
+    return DEL, strconv.Itoa(intPos + 1), string(ref[1]), strconv.Itoa(len(alt) - len(ref)), nil
   }
 
   /*********************** INSERTIONS *********************/
@@ -105,26 +107,20 @@ func UpdateFieldsWithAlt(ref string, alt string, pos string, multiallelic bool) 
   // therefore requiring 1 base of padding to the left
   // there may be cases where VCF variants are unnecessarily padded, but lets skip these
   if len(ref) > 1 {
-    if multiallelic == false {
-      return "", "", "", "", nil
-    }
-
-    // log.Println("Complex ins", pos, ref, alt, multiallelic)
-
     // Our insertion should happen within the reference, so the non-padded
     // portion of the reference is what we'll check
-    if strings.Contains(alt, ref[1: ]) == false {
+    if strings.LastIndex(alt, ref) != 0 {
       return "", "", "", "", nil
     }
     // TODO: More precise checking; for instance we can check if the alt is contained within the end of the ref (sans the 1 base deletion)
     var insBuffer bytes.Buffer
     insBuffer.WriteString("+")
     insBuffer.WriteString(alt[1:len(alt) - len(ref) + 1])
-    return "INS", pos, string(ref[0]), insBuffer.String(), nil
+    return INS, pos, string(ref[0]), insBuffer.String(), nil
   }
 
   var insBuffer bytes.Buffer
   insBuffer.WriteString("+")
   insBuffer.WriteString(alt[1:])
-  return "INS", pos, ref, insBuffer.String(), nil
+  return INS, pos, ref, insBuffer.String(), nil
 }

@@ -86,6 +86,10 @@ func TestConst(t *testing.T) {
   if Dmulti != "DENOVO_MULTIALLELIC" {
     t.Error("Dmulti != DENOVO_MULTIALLELIC", Dmulti)
   }
+
+  if Mnp != "MNP" {
+    t.Error("Mnp != MNP", Mnp)
+  }
 }
 
 func TestNormalizationOfSamples(t *testing.T) {
