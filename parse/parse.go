@@ -24,7 +24,7 @@ const (
 )
 
 var Header = []string{"chrom", "pos", "type", "ref", "alt", "trTv", "heterozygotes",
-    "heterozygosity", "homozygotes", "homozygosity", "missingGenos", "missingness", "sampleMaf"}
+    "heterozygosity", "homozygotes", "homozygosity", "missingGenos", "missingness", "ac", "an", "sampleMaf"}
 
 // Note: If passed decomposed multiallelics, will happily consider them tr or tv
 // I believe it should be up to the consumer what to do with this indeterminate case
